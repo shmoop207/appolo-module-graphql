@@ -14,7 +14,7 @@ let GraphqlModule = class GraphqlModule extends appolo_1.Module {
             id: "",
             path: "/graphql",
             serverRegistration: {},
-            buildSchemaOptions: {},
+            buildSchemaOptions: { nullableByDefault: true },
             apolloServerConfig: {}
         };
     }

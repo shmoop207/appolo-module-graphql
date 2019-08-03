@@ -11,7 +11,7 @@ chai.use(sinonChai);
 
 let app: App;
 
-describe("redis module Spec", function () {
+describe("graph module Spec", function () {
 
 
     beforeEach(async () => {
@@ -40,7 +40,7 @@ describe("redis module Spec", function () {
                         description
                         ingredients
                         numberInCollection
-            }
+            },
         }`;
 
         let res = await request(app.handle).post("/graphql").send({query: query})
@@ -49,6 +49,7 @@ describe("redis module Spec", function () {
         res.body.data.recipe.description.should.be.eq("Desc 1");
         res.body.data.recipe.ingredients.length.should.be.eq(3);
         res.body.data.recipe.numberInCollection.should.be.eq(1);
+
 
     });
 

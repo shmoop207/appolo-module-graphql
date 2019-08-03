@@ -10,7 +10,7 @@ const authChecker_1 = require("./src/authChecker");
 require('chai').should();
 chai.use(sinonChai);
 let app;
-describe("redis module Spec", function () {
+describe("graph module Spec", function () {
     beforeEach(async () => {
         app = appolo_1.createApp({ root: __dirname, environment: "production", port: 8181 });
         await app.module(new index_1.GraphqlModule({
@@ -30,7 +30,7 @@ describe("redis module Spec", function () {
                         description
                         ingredients
                         numberInCollection
-            }
+            },
         }`;
         let res = await request(app.handle).post("/graphql").send({ query: query });
         res.body.data.recipe.title.should.be.eq("Recipe 1");

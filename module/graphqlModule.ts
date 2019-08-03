@@ -18,11 +18,11 @@ export class GraphqlModule extends Module<IOptions> {
         id: "",
         path: "/graphql",
         serverRegistration: {},
-        buildSchemaOptions: {},
+        buildSchemaOptions: {nullableByDefault: true},
         apolloServerConfig: {}
     };
 
-    protected  afterInitialize() {
+    protected afterInitialize() {
 
         let $app = this.app as App;
 

@@ -1,19 +1,21 @@
-import {module, Module,IModuleParams} from "@appolo/engine";
+import {module, Module, IModuleParams} from "@appolo/engine";
 import {IOptions} from "./IOptions";
 import {App} from "@appolo/core";
 import {buildSchema, BuildSchemaOptions, buildSchemaSync, ResolverData} from "type-graphql";
 import {ResolverKey} from "./src/decorator";
 import {Context} from "./src/context";
 import {Reflector} from "@appolo/utils";
+import {Validator} from "@appolo/validator";
 import {Auth} from "./src/authChecker";
 import _ = require("lodash");
 import {ApolloServer, ServerRegistration} from "./src/apollo/apolloServer";
+import {TypeValue} from "type-graphql/dist/decorators/types";
 
 @module()
 export class GraphqlModule extends Module<IOptions> {
 
-    public static for(options:IOptions):IModuleParams{
-        return {type:GraphqlModule,options}
+    public static for(options: IOptions): IModuleParams {
+        return {type: GraphqlModule, options}
     }
 
 
@@ -40,6 +42,7 @@ export class GraphqlModule extends Module<IOptions> {
 
         let schemaOptions: BuildSchemaOptions = {
             ...this._moduleOptions.buildSchemaOptions,
+
             resolvers: resolvers as any,
             container: {
                 get(someClass: any, resolverData: ResolverData<any>): any {
@@ -47,6 +50,23 @@ export class GraphqlModule extends Module<IOptions> {
                 }
             }
         };
+
+        if (schemaOptions.validate === true) {
+
+            schemaOptions.validate = async function (argValue: any, argType: any) {
+                let validator = $app.injector.get<Validator>(Validator);
+
+                let schema = validator.getSchema(argType);
+                if(schema){
+                    await validator.validateAndTrow(schema, argValue, {stripUnknown:false});
+
+
+                }
+
+            }
+
+
+        }
 
         if (this.moduleOptions.auth) {
             schemaOptions.authChecker = (resolverData: ResolverData<Context>, roles: string[]) => {
@@ -63,7 +83,6 @@ export class GraphqlModule extends Module<IOptions> {
             schema,
             context: ({req, res}) => $app.injector.get(contextFn, [req, res, $app])
         });
-
 
 
         let serverOptions: ServerRegistration = {

@@ -1,4 +1,5 @@
 import { Field, ID, ObjectType, Int } from "type-graphql";
+import { string} from "@appolo/validator";
 
 @ObjectType()
 export class Recipe {
@@ -6,6 +7,7 @@ export class Recipe {
     id: string;
 
     @Field()
+
     title: string;
 
     @Field({ nullable: true })

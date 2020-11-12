@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const core_1 = require("@appolo/core");
+const validator_1 = require("@appolo/validator");
 const index_1 = require("../index");
 const chai = require("chai");
 const request = require("supertest");
@@ -13,10 +14,10 @@ let app;
 describe("graph module Spec", function () {
     beforeEach(async () => {
         app = core_1.createApp({ root: __dirname, environment: "production", port: 8181 });
-        app.module.use(index_1.GraphqlModule.for({
+        app.module.use(validator_1.ValidationModule, index_1.GraphqlModule.for({
             middleware: [authMiddleware_1.AuthMiddleware],
             auth: authChecker_1.AuthChecker,
-            buildSchemaOptions: { validate: false }
+            buildSchemaOptions: { validate: true }
         }));
         await app.launch();
     });

@@ -8,6 +8,7 @@ const type_graphql_1 = require("type-graphql");
 const decorator_1 = require("./src/decorator");
 const context_1 = require("./src/context");
 const utils_1 = require("@appolo/utils");
+const validator_1 = require("@appolo/validator");
 const _ = require("lodash");
 const apolloServer_1 = require("./src/apollo/apolloServer");
 let GraphqlModule = GraphqlModule_1 = class GraphqlModule extends engine_1.Module {
@@ -37,6 +38,15 @@ let GraphqlModule = GraphqlModule_1 = class GraphqlModule extends engine_1.Modul
                     return $app.tree.parent.injector.get(someClass);
                 }
             } });
+        if (schemaOptions.validate === true) {
+            schemaOptions.validate = async function (argValue, argType) {
+                let validator = $app.injector.get(validator_1.Validator);
+                let schema = validator.getSchema(argType);
+                if (schema) {
+                    await validator.validateAndTrow(schema, argValue, { stripUnknown: false });
+                }
+            };
+        }
         if (this.moduleOptions.auth) {
             schemaOptions.authChecker = (resolverData, roles) => {
                 return $app.injector.get(this.moduleOptions.auth, [resolverData, roles]).check();

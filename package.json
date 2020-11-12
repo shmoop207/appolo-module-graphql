@@ -1,6 +1,6 @@
 {
   "name": "@appolo/graphql",
-  "version": "8.0.0",
+  "version": "8.0.1",
   "description": "appolo graphql module",
   "keywords": [
     "redis",
@@ -9,6 +9,7 @@
   "main": "index.js",
   "dependencies": {
     "@appolo/core": "^8.0.5",
+    "@appolo/validator": "^8.0.2",
     "@types/accepts": "^1.3.5",
     "accepts": "^1.3.7",
     "apollo-server-core": "^2.19.0",

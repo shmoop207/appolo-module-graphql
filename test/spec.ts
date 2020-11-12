@@ -1,4 +1,5 @@
 import {App, createApp, } from '@appolo/core'
+import {ValidationModule } from '@appolo/validator'
 import {GraphqlModule} from "../index";
 import chai = require('chai');
 import request = require('supertest');
@@ -18,10 +19,10 @@ describe("graph module Spec", function () {
 
         app = createApp({root: __dirname, environment: "production", port: 8181});
 
-         app.module.use( GraphqlModule.for({
+         app.module.use(ValidationModule, GraphqlModule.for({
             middleware: [AuthMiddleware],
             auth: AuthChecker,
-            buildSchemaOptions: {validate: false}
+            buildSchemaOptions: {validate: true}
         }));
 
         await app.launch();

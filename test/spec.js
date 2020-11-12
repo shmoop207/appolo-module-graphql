@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const appolo_1 = require("appolo");
+const core_1 = require("@appolo/core");
 const index_1 = require("../index");
 const chai = require("chai");
 const request = require("supertest");
@@ -12,8 +12,8 @@ chai.use(sinonChai);
 let app;
 describe("graph module Spec", function () {
     beforeEach(async () => {
-        app = appolo_1.createApp({ root: __dirname, environment: "production", port: 8181 });
-        await app.module(new index_1.GraphqlModule({
+        app = core_1.createApp({ root: __dirname, environment: "production", port: 8181 });
+        app.module.use(index_1.GraphqlModule.for({
             middleware: [authMiddleware_1.AuthMiddleware],
             auth: authChecker_1.AuthChecker,
             buildSchemaOptions: { validate: false }
@@ -32,7 +32,7 @@ describe("graph module Spec", function () {
                         numberInCollection
             },
         }`;
-        let res = await request(app.handle).post("/graphql").send({ query: query });
+        let res = await request(app.route.handle).post("/graphql").send({ query: query });
         res.body.data.recipe.title.should.be.eq("Recipe 1");
         res.body.data.recipe.description.should.be.eq("Desc 1");
         res.body.data.recipe.ingredients.length.should.be.eq(3);
@@ -47,7 +47,7 @@ describe("graph module Spec", function () {
                             numberInCollection
                         }
                     }`;
-        let res = await request(app.handle).post("/graphql").send({ query: query });
+        let res = await request(app.route.handle).post("/graphql").send({ query: query });
         res.body.data.recipes.length.should.be.eq(3);
         res.body.data.recipes[1].title.should.be.eq("Recipe 2");
         res.body.data.recipes[1].description.should.be.eq("Desc 2");
@@ -65,7 +65,7 @@ describe("graph module Spec", function () {
                             ],
                         }) {id numberInCollection title}
                     }`;
-        let res = await request(app.handle).post("/graphql").send({ query: query });
+        let res = await request(app.route.handle).post("/graphql").send({ query: query });
         res.body.data.addRecipe.title.should.be.eq("New recipe");
         res.body.data.addRecipe.numberInCollection.should.be.eq(4);
         res.body.data.addRecipe.id.should.be.eq("4");
@@ -77,7 +77,7 @@ describe("graph module Spec", function () {
                     
             }
         }`;
-        let res = await request(app.handle).post("/graphql").send({ query: query });
+        let res = await request(app.route.handle).post("/graphql").send({ query: query });
         res.body.data.recipe.contextParam.should.be.eq("aaaa");
     });
     it("should get recipe with auth", async () => {
@@ -87,7 +87,7 @@ describe("graph module Spec", function () {
                     
             }
         }`;
-        let res = await request(app.handle).post("/graphql").send({ query: query });
+        let res = await request(app.route.handle).post("/graphql").send({ query: query });
         res.body.data.recipeWithAuth.contextParam.should.be.eq("aaaa");
     });
 });

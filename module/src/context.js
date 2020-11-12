@@ -1,7 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Context = void 0;
 const tslib_1 = require("tslib");
-const appolo_1 = require("appolo");
+const inject_1 = require("@appolo/inject");
+const core_1 = require("@appolo/core");
 let Context = class Context {
     constructor(_req, _res, _app) {
         this._req = _req;
@@ -22,8 +24,8 @@ let Context = class Context {
     }
 };
 Context = tslib_1.__decorate([
-    appolo_1.define(),
-    tslib_1.__metadata("design:paramtypes", [Object, Object, appolo_1.App])
+    inject_1.define(),
+    tslib_1.__metadata("design:paramtypes", [Object, Object, core_1.App])
 ], Context);
 exports.Context = Context;
 //# sourceMappingURL=context.js.map

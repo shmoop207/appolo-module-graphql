@@ -1,4 +1,4 @@
-import {define, singleton, injectParam, inject, IFactory, Middleware, NextFn} from "appolo";
+import {define,} from "@appolo/inject";
 import {Auth} from "../../module/src/authChecker";
 
 

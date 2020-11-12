@@ -1,5 +1,5 @@
 import {Resolver, Query, FieldResolver, Arg, Root, Mutation, UseMiddleware, Ctx, Authorized,Register} from "../../index";
-import {define, singleton, injectParam, inject} from "appolo";
+import {define, singleton, inject} from "@appolo/inject";
 
 import {Recipe} from "./recipe-type";
 import {RecipeService} from "./recipe-service";

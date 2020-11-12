@@ -1,4 +1,6 @@
-import {define, App, IRequest, IResponse, Injector} from 'appolo';
+import {IRequest, IResponse, } from '@appolo/route';
+import {define,  Injector} from '@appolo/inject';
+import {App} from '@appolo/core';
 
 @define()
 export class Context {

@@ -1,5 +1,5 @@
 import { plainToClass } from "class-transformer";
-import {define,singleton,injectParam,inject,initMethod } from "appolo";
+import {define,singleton,inject,init } from "@appolo/inject";
 
 import { Recipe } from "./recipe-type";
 import { RecipeInput } from "./recipe-input";
@@ -14,7 +14,7 @@ export class RecipeService {
     constructor() {
 
     }
-    @initMethod()
+    @init()
     initialize(){
         this.autoIncrementValue = this.items.length;
     }

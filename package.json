@@ -1,6 +1,6 @@
 {
   "name": "@appolo/graphql",
-  "version": "0.0.4",
+  "version": "8.0.0",
   "description": "appolo graphql module",
   "keywords": [
     "redis",
@@ -8,12 +8,15 @@
   ],
   "main": "index.js",
   "dependencies": {
-    "apollo-server-express": "^2.8.1",
-    "appolo": "^6.0.85",
-    "bluebird": "^3.5.5",
-    "graphql": "^14.4.2",
-    "lodash": "^4.17.15",
-    "type-graphql": "^0.17.4"
+    "@appolo/core": "^8.0.5",
+    "@types/accepts": "^1.3.5",
+    "accepts": "^1.3.7",
+    "apollo-server-core": "^2.19.0",
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "graphql": "^15.4.0",
+    "lodash": "^4.17.20",
+    "type-graphql": "^1.1.1"
   },
   "publishConfig": {
     "access": "public"
@@ -22,21 +25,23 @@
     "test": "mocha test --timeout 5000 --exit"
   },
   "devDependencies": {
-    "@types/bluebird": "^3.5.27",
-    "@types/chai": "^4.1.7",
-    "@types/lodash": "^4.14.136",
-    "@types/mocha": "^5.2.7",
-    "@types/node": "^12.6.9",
-    "@types/sinon": "^7.0.13",
-    "@types/sinon-chai": "^3.2.2",
-    "@types/supertest": "^2.0.8",
+    "@types/bluebird": "^3.5.33",
+    "@types/body-parser": "^1.19.0",
+    "@types/chai": "^4.2.14",
+    "@types/cors": "^2.8.8",
+    "@types/lodash": "^4.14.165",
+    "@types/mocha": "^8.0.4",
+    "@types/node": "^14.14.7",
+    "@types/sinon": "^9.0.8",
+    "@types/sinon-chai": "^3.2.5",
+    "@types/supertest": "^2.0.10",
     "chai": "^4.2.0",
-    "class-transformer": "^0.2.3",
-    "mocha": "^6.2.0",
-    "sinon": "^7.3.2",
-    "sinon-chai": "^3.3.0",
-    "supertest": "^4.0.2",
-    "typescript": "^3.5.3"
+    "class-transformer": "^0.3.1",
+    "mocha": "^8.2.1",
+    "sinon": "^9.2.1",
+    "sinon-chai": "^3.5.0",
+    "supertest": "^6.0.1",
+    "typescript": "^4.0.5"
   },
   "repository": {
     "type": "git",

@@ -1,12 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.Register = exports.ResolverKey = void 0;
 require("reflect-metadata");
-const appolo_1 = require("appolo");
+const inject_1 = require("@appolo/inject");
 exports.ResolverKey = Symbol("resolver");
 function Register(path = "/graphql") {
     return function (fn) {
-        appolo_1.define()(fn);
-        appolo_1.Util.getReflectData(exports.ResolverKey, fn, { path });
+        inject_1.define()(fn);
+        inject_1.Util.getReflectData(exports.ResolverKey, fn, { path });
     };
 }
 exports.Register = Register;

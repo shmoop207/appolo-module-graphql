@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.DataFactory = void 0;
 const tslib_1 = require("tslib");
-const appolo_1 = require("appolo");
+const inject_1 = require("@appolo/inject");
 const sample_recipes_1 = require("./sample-recipes");
 let DataFactory = class DataFactory {
     get() {
@@ -9,9 +10,9 @@ let DataFactory = class DataFactory {
     }
 };
 DataFactory = tslib_1.__decorate([
-    appolo_1.define("data"),
-    appolo_1.singleton(),
-    appolo_1.factory()
+    inject_1.define("data"),
+    inject_1.singleton(),
+    inject_1.factory()
 ], DataFactory);
 exports.DataFactory = DataFactory;
 //# sourceMappingURL=dataFactory.js.map

@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.RecipeResolver = void 0;
 const tslib_1 = require("tslib");
 const index_1 = require("../../index");
-const appolo_1 = require("appolo");
+const inject_1 = require("@appolo/inject");
 const recipe_type_1 = require("./recipe-type");
 const recipe_service_1 = require("./recipe-service");
 const recipe_input_1 = require("./recipe-input");
@@ -31,7 +32,7 @@ let RecipeResolver = class RecipeResolver {
     }
 };
 tslib_1.__decorate([
-    appolo_1.inject(),
+    inject_1.inject(),
     tslib_1.__metadata("design:type", recipe_service_1.RecipeService)
 ], RecipeResolver.prototype, "recipeService", void 0);
 tslib_1.__decorate([
@@ -81,7 +82,7 @@ tslib_1.__decorate([
 RecipeResolver = tslib_1.__decorate([
     index_1.Resolver(of => recipe_type_1.Recipe),
     index_1.Register(),
-    appolo_1.singleton(),
+    inject_1.singleton(),
     tslib_1.__metadata("design:paramtypes", [])
 ], RecipeResolver);
 exports.RecipeResolver = RecipeResolver;

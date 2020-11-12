@@ -1,4 +1,5 @@
-import {define, singleton, injectParam, inject, IFactory, Middleware,NextFn} from "appolo";
+import { Middleware,NextFn} from "@appolo/route";
+import {define, singleton} from "@appolo/inject";
 
 
 @define()

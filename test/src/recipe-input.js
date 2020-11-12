@@ -1,5 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.RecipeInput = void 0;
 const tslib_1 = require("tslib");
 const type_graphql_1 = require("type-graphql");
 let RecipeInput = class RecipeInput {

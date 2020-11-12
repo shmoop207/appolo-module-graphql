@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.AuthChecker = void 0;
 const tslib_1 = require("tslib");
-const appolo_1 = require("appolo");
+const inject_1 = require("@appolo/inject");
 const authChecker_1 = require("../../module/src/authChecker");
 let AuthChecker = class AuthChecker extends authChecker_1.Auth {
     async check() {
@@ -9,7 +10,7 @@ let AuthChecker = class AuthChecker extends authChecker_1.Auth {
     }
 };
 AuthChecker = tslib_1.__decorate([
-    appolo_1.define()
+    inject_1.define()
 ], AuthChecker);
 exports.AuthChecker = AuthChecker;
 //# sourceMappingURL=authChecker.js.map

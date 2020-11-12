@@ -1,8 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.RecipeService = void 0;
 const tslib_1 = require("tslib");
 const class_transformer_1 = require("class-transformer");
-const appolo_1 = require("appolo");
+const inject_1 = require("@appolo/inject");
 const recipe_type_1 = require("./recipe-type");
 let RecipeService = class RecipeService {
     constructor() {
@@ -34,18 +35,18 @@ let RecipeService = class RecipeService {
     }
 };
 tslib_1.__decorate([
-    appolo_1.inject("data"),
+    inject_1.inject("data"),
     tslib_1.__metadata("design:type", Array)
 ], RecipeService.prototype, "items", void 0);
 tslib_1.__decorate([
-    appolo_1.initMethod(),
+    inject_1.init(),
     tslib_1.__metadata("design:type", Function),
     tslib_1.__metadata("design:paramtypes", []),
     tslib_1.__metadata("design:returntype", void 0)
 ], RecipeService.prototype, "initialize", null);
 RecipeService = tslib_1.__decorate([
-    appolo_1.define(),
-    appolo_1.singleton(),
+    inject_1.define(),
+    inject_1.singleton(),
     tslib_1.__metadata("design:paramtypes", [])
 ], RecipeService);
 exports.RecipeService = RecipeService;

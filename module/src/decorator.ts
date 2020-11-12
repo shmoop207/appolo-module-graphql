@@ -1,5 +1,5 @@
 import "reflect-metadata";
-import {define, Util} from 'appolo';
+import {define, Util} from '@appolo/inject';
 
 
 export const ResolverKey = Symbol("resolver");

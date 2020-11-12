@@ -1,4 +1,3 @@
-import {App, IRequest, IResponse, Injector, define} from 'appolo';
 import {AuthChecker, ResolverData} from "type-graphql";
 import {Context} from "./context";
 

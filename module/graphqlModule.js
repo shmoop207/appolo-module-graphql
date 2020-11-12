@@ -1,15 +1,18 @@
 "use strict";
+var GraphqlModule_1;
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.GraphqlModule = void 0;
 const tslib_1 = require("tslib");
-const appolo_1 = require("appolo");
+const engine_1 = require("@appolo/engine");
 const type_graphql_1 = require("type-graphql");
-const apollo_server_express_1 = require("apollo-server-express");
 const decorator_1 = require("./src/decorator");
 const context_1 = require("./src/context");
+const utils_1 = require("@appolo/utils");
 const _ = require("lodash");
-let GraphqlModule = class GraphqlModule extends appolo_1.Module {
-    constructor(options) {
-        super(options);
+const apolloServer_1 = require("./src/apollo/apolloServer");
+let GraphqlModule = GraphqlModule_1 = class GraphqlModule extends engine_1.Module {
+    constructor() {
+        super(...arguments);
         this.Defaults = {
             id: "",
             path: "/graphql",
@@ -18,17 +21,20 @@ let GraphqlModule = class GraphqlModule extends appolo_1.Module {
             apolloServerConfig: {}
         };
     }
-    afterInitialize() {
+    static for(options) {
+        return { type: GraphqlModule_1, options };
+    }
+    afterModuleInitialize() {
         let $app = this.app;
-        let modules = appolo_1.Util.findAllReflectData(decorator_1.ResolverKey, this.parent.exported);
+        let modules = this.app.tree.parent.discovery.findAllReflectData(decorator_1.ResolverKey);
         let resolvers = modules.map(item => item.fn);
-        resolvers = _.filter(resolvers, resolver => appolo_1.Util.getReflectData(decorator_1.ResolverKey, resolver).path === this.moduleOptions.path);
+        resolvers = _.filter(resolvers, resolver => utils_1.Reflector.getFnMetadata(decorator_1.ResolverKey, resolver).path === this.moduleOptions.path);
         if (this.moduleOptions.buildSchemaOptions.resolvers) {
             resolvers = resolvers.concat(this.moduleOptions.buildSchemaOptions.resolvers);
         }
-        let schemaOptions = Object.assign({}, this._moduleOptions.buildSchemaOptions, { resolvers: resolvers, container: {
+        let schemaOptions = Object.assign(Object.assign({}, this._moduleOptions.buildSchemaOptions), { resolvers: resolvers, container: {
                 get(someClass, resolverData) {
-                    return $app.parent.injector.get(someClass);
+                    return $app.tree.parent.injector.get(someClass);
                 }
             } });
         if (this.moduleOptions.auth) {
@@ -38,17 +44,16 @@ let GraphqlModule = class GraphqlModule extends appolo_1.Module {
         }
         const schema = type_graphql_1.buildSchemaSync(schemaOptions);
         let contextFn = this._moduleOptions.context || context_1.Context;
-        const server = new apollo_server_express_1.ApolloServer(Object.assign({}, this._moduleOptions.apolloServerConfig, { schema, context: ({ req, res }) => $app.injector.get(contextFn, [req, res, $app]) }));
-        let serverOptions = Object.assign({}, this.moduleOptions.serverRegistration, { app: this.rootParent, path: this.moduleOptions.path });
+        const server = new apolloServer_1.ApolloServer(Object.assign(Object.assign({}, this._moduleOptions.apolloServerConfig), { schema, context: ({ req, res }) => $app.injector.get(contextFn, [req, res, $app]) }));
+        let serverOptions = Object.assign(Object.assign({}, this.moduleOptions.serverRegistration), { app: this.rootParent, path: this.moduleOptions.path });
         _.forEach(this.moduleOptions.middleware, middleware => {
-            this.rootParent.use(this.moduleOptions.path, middleware);
+            this.rootParent.route.use(this.moduleOptions.path, middleware);
         });
         server.applyMiddleware(serverOptions);
     }
 };
-GraphqlModule = tslib_1.__decorate([
-    appolo_1.module(),
-    tslib_1.__metadata("design:paramtypes", [Object])
+GraphqlModule = GraphqlModule_1 = tslib_1.__decorate([
+    engine_1.module()
 ], GraphqlModule);
 exports.GraphqlModule = GraphqlModule;
 //# sourceMappingURL=graphqlModule.js.map

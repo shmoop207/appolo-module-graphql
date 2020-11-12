@@ -1,4 +1,4 @@
-import {App, createApp, Util} from 'appolo'
+import {App, createApp, } from '@appolo/core'
 import {GraphqlModule} from "../index";
 import chai = require('chai');
 import request = require('supertest');
@@ -18,7 +18,7 @@ describe("graph module Spec", function () {
 
         app = createApp({root: __dirname, environment: "production", port: 8181});
 
-        await app.module(new GraphqlModule({
+         app.module.use( GraphqlModule.for({
             middleware: [AuthMiddleware],
             auth: AuthChecker,
             buildSchemaOptions: {validate: false}
@@ -43,7 +43,7 @@ describe("graph module Spec", function () {
             },
         }`;
 
-        let res = await request(app.handle).post("/graphql").send({query: query})
+        let res = await request(app.route.handle).post("/graphql").send({query: query})
 
         res.body.data.recipe.title.should.be.eq("Recipe 1");
         res.body.data.recipe.description.should.be.eq("Desc 1");
@@ -64,7 +64,7 @@ describe("graph module Spec", function () {
                         }
                     }`;
 
-        let res = await request(app.handle).post("/graphql").send({query: query});
+        let res = await request(app.route.handle).post("/graphql").send({query: query});
 
         res.body.data.recipes.length.should.be.eq(3);
 
@@ -89,7 +89,7 @@ describe("graph module Spec", function () {
                         }) {id numberInCollection title}
                     }`;
 
-        let res = await request(app.handle).post("/graphql").send({query: query});
+        let res = await request(app.route.handle).post("/graphql").send({query: query});
 
 
         res.body.data.addRecipe.title.should.be.eq("New recipe");
@@ -107,7 +107,7 @@ describe("graph module Spec", function () {
             }
         }`;
 
-        let res = await request(app.handle).post("/graphql").send({query: query})
+        let res = await request(app.route.handle).post("/graphql").send({query: query})
 
         res.body.data.recipe.contextParam.should.be.eq("aaaa");
 
@@ -122,7 +122,7 @@ describe("graph module Spec", function () {
             }
         }`;
 
-        let res = await request(app.handle).post("/graphql").send({query: query})
+        let res = await request(app.route.handle).post("/graphql").send({query: query})
 
         res.body.data.recipeWithAuth.contextParam.should.be.eq("aaaa");
 

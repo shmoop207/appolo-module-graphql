@@ -1,4 +1,4 @@
-import {define, singleton, injectParam, inject, IFactory, factory} from "appolo";
+import {define, singleton, inject, IFactory, factory} from "@appolo/inject";
 
 import {
     Resolver,
